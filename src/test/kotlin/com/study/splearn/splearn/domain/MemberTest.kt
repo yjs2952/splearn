@@ -1,14 +1,33 @@
 package com.study.splearn.splearn.domain
 
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class MemberTest {
 
+    private lateinit var member: Member
+    private lateinit var passwordEncoder: PasswordEncoder
+
+    @BeforeEach
+    fun setUp() {
+        passwordEncoder = object : PasswordEncoder {
+            override fun encode(password: String): String {
+                return password.uppercase() // 단순한 예시로 비밀번호를 뒤집어서 저장
+            }
+
+            override fun matches(password: String, passwordHash: String): Boolean {
+                return encode(password) == passwordHash // 단순한 예시로 비밀번호가 뒤집힌 것과 비교
+            }
+        }
+        member = Member.create("bro.fallz@kakaocorp.com", "bro.fallz", "secret", passwordEncoder)
+    }
+
     @Test
     fun `Member 를 생성한다`() {
-        Member("bro.fallz@kakaocorp.com", "bro.fallz", "secret")
+        member
             .also {
                 assertThat(it.status).isEqualTo(MemberStatus.PENDING)
             }
@@ -16,7 +35,6 @@ class MemberTest {
 
     @Test
     fun `activate 메롱이다`() {
-        val member = Member("bro.fallz@kakaocorp.com", "bro.fallz", "secret")
         member.activate()
 
         assertThat(member.status).isEqualTo(MemberStatus.ACTIVE)
@@ -24,7 +42,6 @@ class MemberTest {
 
     @Test
     fun `activate 실패`() {
-        val member = Member("bro.fallz@kakaocorp.com", "bro.fallz", "secret")
         member.activate()
 
         assertThrows<IllegalStateException> {
@@ -34,7 +51,6 @@ class MemberTest {
 
     @Test
     fun `deactivate 성공`() {
-        val member = Member("bro.fallz@kakaocorp.com", "bro.fallz", "secret")
         member.activate()
 
         member.deactivate()
@@ -44,8 +60,6 @@ class MemberTest {
 
     @Test
     fun `deactivate 실패`() {
-        val member = Member("bro.fallz@kakaocorp.com", "bro.fallz", "secret")
-
         assertThrows<IllegalStateException> {
             member.deactivate()
         }
@@ -56,5 +70,26 @@ class MemberTest {
         assertThrows<IllegalStateException> {
             member.deactivate()
         }
+    }
+
+    @Test
+    fun `verifyPassword`() {
+        Assertions.assertThat(member.verifyPassword("secret", passwordEncoder)).isTrue
+        Assertions.assertThat(member.verifyPassword("hello", passwordEncoder)).isFalse
+    }
+
+    @Test
+    fun `changeNickName`() {
+        Assertions.assertThat(member.nickname).isEqualTo("bro.fallz")
+
+        member.changeNickName("batman")
+
+        Assertions.assertThat(member.nickname).isEqualTo("batman")
+    }
+
+    @Test
+    fun `changePassword`() {
+        member.changePassword("supersecret", passwordEncoder)
+        assertThat(member.verifyPassword("supersecret", passwordEncoder)).isTrue
     }
 }
