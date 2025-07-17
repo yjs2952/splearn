@@ -1,7 +1,5 @@
 package com.study.splearn.splearn.domain
 
-import java.util.regex.Pattern
-
 data class Member private constructor(
     val email: Email,
     var nickname: String,
