@@ -112,4 +112,18 @@ class MemberTest {
 
         Assertions.assertThat(member.isActive()).isFalse
     }
+
+    @Test
+    fun `invalidEmail`() {
+        assertThrows<IllegalArgumentException> {
+            Member.create(
+                createRequest = MemberCreateRequest(
+                    email = "invalid-email",
+                    nickname = "nickname",
+                    password = "password"
+                ),
+                passwordEncoder = passwordEncoder
+            )
+        }
+    }
 }

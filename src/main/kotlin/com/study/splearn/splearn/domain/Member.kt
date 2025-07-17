@@ -1,7 +1,9 @@
 package com.study.splearn.splearn.domain
 
+import java.util.regex.Pattern
+
 data class Member private constructor(
-    val email: String,
+    val email: Email,
     var nickname: String,
     var passwordHash: String,
 ) {
@@ -41,7 +43,7 @@ data class Member private constructor(
             passwordEncoder: PasswordEncoder,
         ): Member {
             return Member(
-                email = createRequest.email,
+                email = Email(createRequest.email),
                 nickname = createRequest.nickname,
                 passwordHash = passwordEncoder.encode(createRequest.password)
             )
