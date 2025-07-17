@@ -28,18 +28,23 @@ data class Member private constructor(
     }
 
     fun changePassword(password: String, passwordEncoder: PasswordEncoder) {
-        this.passwordHash = passwordEncoder.encode(password) // 비밀번호 해시를 변경하는 로직이 필요합니다.
-        // 예를 들어, PasswordEncoder를 사용하여 새 비밀번호를 해시할 수 있습니다.
+        this.passwordHash = passwordEncoder.encode(password)
+    }
+
+    fun isActive(): Boolean {
+        return this.status == MemberStatus.ACTIVE
     }
 
     companion object {
         fun create(
-            email: String,
-            nickname: String,
-            password: String,
+            createRequest: MemberCreateRequest,
             passwordEncoder: PasswordEncoder,
         ): Member {
-            return Member(email, nickname, passwordEncoder.encode(password))
+            return Member(
+                email = createRequest.email,
+                nickname = createRequest.nickname,
+                passwordHash = passwordEncoder.encode(createRequest.password)
+            )
         }
     }
 }

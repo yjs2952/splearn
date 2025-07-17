@@ -22,7 +22,14 @@ class MemberTest {
                 return encode(password) == passwordHash // 단순한 예시로 비밀번호가 뒤집힌 것과 비교
             }
         }
-        member = Member.create("bro.fallz@kakaocorp.com", "bro.fallz", "secret", passwordEncoder)
+        member = Member.create(
+            createRequest = MemberCreateRequest(
+                email = "bro.fallz@kakaocorp.com",
+                nickname = "bro.fallz",
+                password = "secret"
+            ),
+            passwordEncoder = passwordEncoder
+        )
     }
 
     @Test
@@ -91,5 +98,18 @@ class MemberTest {
     fun `changePassword`() {
         member.changePassword("supersecret", passwordEncoder)
         assertThat(member.verifyPassword("supersecret", passwordEncoder)).isTrue
+    }
+
+    @Test
+    fun `shouldBeActive`() {
+        Assertions.assertThat(member.isActive()).isFalse
+
+        member.activate()
+
+        Assertions.assertThat(member.isActive()).isTrue
+
+        member.deactivate()
+
+        Assertions.assertThat(member.isActive()).isFalse
     }
 }
