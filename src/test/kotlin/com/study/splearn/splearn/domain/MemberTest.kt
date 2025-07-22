@@ -22,8 +22,8 @@ class MemberTest {
                 return encode(password) == passwordHash // 단순한 예시로 비밀번호가 뒤집힌 것과 비교
             }
         }
-        member = Member.create(
-            createRequest = MemberCreateRequest(
+        member = Member.register(
+            registerRequest = MemberRegisterRequest(
                 email = "bro.fallz@kakaocorp.com",
                 nickname = "bro.fallz",
                 password = "secret"
@@ -116,8 +116,8 @@ class MemberTest {
     @Test
     fun `invalidEmail`() {
         assertThrows<IllegalArgumentException> {
-            Member.create(
-                createRequest = MemberCreateRequest(
+            Member.register(
+                registerRequest = MemberRegisterRequest(
                     email = "invalid-email",
                     nickname = "nickname",
                     password = "password"

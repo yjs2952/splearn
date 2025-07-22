@@ -36,14 +36,14 @@ data class Member private constructor(
     }
 
     companion object {
-        fun create(
-            createRequest: MemberCreateRequest,
+        fun register(
+            registerRequest: MemberRegisterRequest,
             passwordEncoder: PasswordEncoder,
         ): Member {
             return Member(
-                email = Email(createRequest.email),
-                nickname = createRequest.nickname,
-                passwordHash = passwordEncoder.encode(createRequest.password)
+                email = Email(registerRequest.email),
+                nickname = registerRequest.nickname,
+                passwordHash = passwordEncoder.encode(registerRequest.password)
             )
         }
     }
