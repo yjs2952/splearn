@@ -7,8 +7,10 @@ import com.study.splearn.splearn.domain.MemberFixture.createPasswordEncoder
 import jakarta.persistence.EntityManager
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.dao.DataIntegrityViolationException
 
 @DataJpaTest
 class MemberRepositoryTest {
@@ -29,5 +31,17 @@ class MemberRepositoryTest {
         entityManager.flush()
 
         Assertions.assertThat(member.id).isNotNull()
+    }
+
+    @Test
+    fun `duplicateEmailFail`() {
+        val member = Member.register(createMemberMemberRegisterRequest(), createPasswordEncoder())
+        memberRepository.save(member)
+
+        val member2 = Member.register(createMemberMemberRegisterRequest(), createPasswordEncoder())
+
+        assertThrows<DataIntegrityViolationException> {
+            memberRepository.save(member2)
+        }
     }
 }
