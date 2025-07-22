@@ -1,10 +1,26 @@
 package com.study.splearn.splearn.domain
 
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+
+@Entity
 data class Member private constructor(
+
+    @Embedded
     val email: Email,
     var nickname: String,
     var passwordHash: String,
 ) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null
+
+    @Enumerated(EnumType.STRING)
     var status: MemberStatus = MemberStatus.PENDING
 
     fun activate() {

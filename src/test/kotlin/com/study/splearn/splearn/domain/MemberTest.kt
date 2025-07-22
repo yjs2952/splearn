@@ -1,5 +1,7 @@
 package com.study.splearn.splearn.domain
 
+import com.study.splearn.splearn.domain.MemberFixture.createMemberMemberRegisterRequest
+import com.study.splearn.splearn.domain.MemberFixture.createPasswordEncoder
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -13,21 +15,9 @@ class MemberTest {
 
     @BeforeEach
     fun setUp() {
-        passwordEncoder = object : PasswordEncoder {
-            override fun encode(password: String): String {
-                return password.uppercase() // 단순한 예시로 비밀번호를 뒤집어서 저장
-            }
-
-            override fun matches(password: String, passwordHash: String): Boolean {
-                return encode(password) == passwordHash // 단순한 예시로 비밀번호가 뒤집힌 것과 비교
-            }
-        }
+        passwordEncoder = createPasswordEncoder()
         member = Member.register(
-            registerRequest = MemberRegisterRequest(
-                email = "bro.fallz@kakaocorp.com",
-                nickname = "bro.fallz",
-                password = "secret"
-            ),
+            registerRequest = createMemberMemberRegisterRequest(),
             passwordEncoder = passwordEncoder
         )
     }
@@ -87,7 +77,7 @@ class MemberTest {
 
     @Test
     fun `changeNickName`() {
-        Assertions.assertThat(member.nickname).isEqualTo("bro.fallz")
+        Assertions.assertThat(member.nickname).isEqualTo("bro")
 
         member.changeNickName("batman")
 
@@ -117,11 +107,7 @@ class MemberTest {
     fun `invalidEmail`() {
         assertThrows<IllegalArgumentException> {
             Member.register(
-                registerRequest = MemberRegisterRequest(
-                    email = "invalid-email",
-                    nickname = "nickname",
-                    password = "password"
-                ),
+                registerRequest = createMemberMemberRegisterRequest("invalid-email"),
                 passwordEncoder = passwordEncoder
             )
         }
