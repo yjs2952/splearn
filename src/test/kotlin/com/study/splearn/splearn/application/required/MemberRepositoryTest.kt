@@ -1,9 +1,7 @@
-package com.study.splearn.splearn.application.provided
+package com.study.splearn.splearn.application.required
 
-import com.study.splearn.splearn.application.required.MemberRepository
 import com.study.splearn.splearn.domain.Member
-import com.study.splearn.splearn.domain.MemberFixture.createMemberMemberRegisterRequest
-import com.study.splearn.splearn.domain.MemberFixture.createPasswordEncoder
+import com.study.splearn.splearn.domain.MemberFixture
 import jakarta.persistence.EntityManager
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -23,7 +21,10 @@ class MemberRepositoryTest {
 
     @Test
     fun `createMember`() {
-        val member = Member.register(createMemberMemberRegisterRequest(), createPasswordEncoder())
+        val member = Member.Companion.register(
+            MemberFixture.createMemberMemberRegisterRequest(),
+            MemberFixture.createPasswordEncoder()
+        )
 
         Assertions.assertThat(member.id).isNull()
 
@@ -35,10 +36,16 @@ class MemberRepositoryTest {
 
     @Test
     fun `duplicateEmailFail`() {
-        val member = Member.register(createMemberMemberRegisterRequest(), createPasswordEncoder())
+        val member = Member.Companion.register(
+            MemberFixture.createMemberMemberRegisterRequest(),
+            MemberFixture.createPasswordEncoder()
+        )
         memberRepository.save(member)
 
-        val member2 = Member.register(createMemberMemberRegisterRequest(), createPasswordEncoder())
+        val member2 = Member.Companion.register(
+            MemberFixture.createMemberMemberRegisterRequest(),
+            MemberFixture.createPasswordEncoder()
+        )
 
         assertThrows<DataIntegrityViolationException> {
             memberRepository.save(member2)
