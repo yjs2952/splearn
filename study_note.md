@@ -7,3 +7,15 @@
 ## 27강 회원 애플리케이션 서비스 테스트(1)
 ### 클린 코드를 하고 싶으면 테스트 코드를 반드시 만들어야 한다
 - 헥사고널도 마찬가지이다
+
+## 28강 회원 애플리케이션 서비스 테스트(2)
+
+### 테스트 코드에서 의존성 주입하는 다양한 방법
+
+- @Autowired 사용
+- 생성자로 바로 주입
+    1. @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) 어노테이션 사용
+        - 자바의 경우 record 타입 사용 가능 (스프링부트 3.2 이상)
+        - 코틀린의 경우 primary constructor로 바로 받으면 됨
+    2. spring.test.constructor.autowire.mode=all 설정
+        - [junit-platform.properties](src/test/resources/junit-platform.properties)

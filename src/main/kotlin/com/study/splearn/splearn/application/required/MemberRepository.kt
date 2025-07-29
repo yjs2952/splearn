@@ -1,5 +1,6 @@
 package com.study.splearn.splearn.application.required
 
+import com.study.splearn.splearn.domain.Email
 import com.study.splearn.splearn.domain.Member
 import org.springframework.data.repository.Repository
 
@@ -8,4 +9,5 @@ import org.springframework.data.repository.Repository
  */
 interface MemberRepository: Repository<Member, Long> {
     fun save(member: Member): Member
+    fun findByEmail(email: Email): Member?
 }
