@@ -5,6 +5,7 @@ import com.study.splearn.splearn.domain.DuplicateEmailException
 import com.study.splearn.splearn.domain.MemberFixture
 import com.study.splearn.splearn.domain.MemberRegisterRequest
 import com.study.splearn.splearn.domain.MemberStatus
+import jakarta.persistence.EntityManager
 import jakarta.validation.ConstraintViolationException
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 @Import(SplearnTestConfiguration::class)
 class MemberRegisterTest(
     private val memberRegister: MemberRegister,
+    private val entityManager: EntityManager,
 ) {
 
     @Test
@@ -35,6 +37,19 @@ class MemberRegisterTest(
         assertThrows<DuplicateEmailException> {
             memberRegister.register(MemberFixture.createMemberMemberRegisterRequest())
         }
+    }
+
+    @Test
+    fun `activate`() {
+        val member = memberRegister.register(MemberFixture.createMemberMemberRegisterRequest())
+        entityManager.flush()
+        entityManager.clear()
+
+        val activatedMember = memberRegister.activate(member.id!!)
+        entityManager.flush()
+
+        Assertions.assertThat(activatedMember.id).isEqualTo(member.id)
+        Assertions.assertThat(activatedMember.status).isEqualTo(MemberStatus.ACTIVE)
     }
 
     @Test

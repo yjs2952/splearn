@@ -1,5 +1,6 @@
 package com.study.splearn.splearn.application
 
+import com.study.splearn.splearn.application.provided.MemberFinder
 import com.study.splearn.splearn.application.provided.MemberRegister
 import com.study.splearn.splearn.application.required.EmailSender
 import com.study.splearn.splearn.application.required.MemberRepository
@@ -15,7 +16,8 @@ import org.springframework.validation.annotation.Validated
 @Service
 @Transactional
 @Validated
-class MemberService(
+class MemberModifyService(
+    private val memberFinder: MemberFinder,
     private val memberRepository: MemberRepository,
     private val emailSender: EmailSender,
     private val passwordEncoder: PasswordEncoder,
@@ -31,6 +33,15 @@ class MemberService(
         return member
     }
 
+    override fun activate(memberId: Long): Member {
+        // 회원 조회 및 예외처리 코드를 memberFinder를 통해 수행
+        val member = memberFinder.find(memberId)
+
+        // 도메인 모델에 만들어 놓은 기능을 수행
+        member.activate()
+        return memberRepository.save(member)
+    }
+
     private fun sendWelcomeEmail(member: Member) {
         emailSender.send(member.email, "등록을 완료해주세요.", "아래 링크를 클릭해서 등록을 완료해주세요.")
     }
@@ -39,13 +50,5 @@ class MemberService(
         memberRepository.findByEmail(Email(registerRequest.email))?.let {
             throw DuplicateEmailException("이미 등록된 이메일입니다: ${registerRequest.email}")
         }
-    }
-
-    override fun isEmailDuplicated(email: String): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun isNicknameDuplicated(nickname: String): Boolean {
-        TODO("Not yet implemented")
     }
 }

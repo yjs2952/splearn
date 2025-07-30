@@ -17,18 +17,10 @@ interface MemberRegister {
     fun register(@Valid registerRequest: MemberRegisterRequest): Member
 
     /**
-     * 회원 이메일 중복 여부를 확인한다
+     * 회원을 활성화한다
      *
-     * @param email 회원 이메일
-     * @return 중복 여부
+     * @param memberId 활성화할 회원의 ID
+     * @return 활성화된 회원 정보
      */
-    fun isEmailDuplicated(email: String): Boolean
-
-    /**
-     * 회원 닉네임 중복 여부를 확인한다
-     *
-     * @param nickname 회원 닉네임
-     * @return 중복 여부
-     */
-    fun isNicknameDuplicated(nickname: String): Boolean
+    fun activate(memberId: Long): Member
 }
