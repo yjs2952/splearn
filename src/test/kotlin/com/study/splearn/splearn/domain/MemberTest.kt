@@ -71,23 +71,23 @@ class MemberTest {
 
     @Test
     fun `verifyPassword`() {
-        Assertions.assertThat(member.verifyPassword("secret", passwordEncoder)).isTrue
+        Assertions.assertThat(member.verifyPassword("verysecret", passwordEncoder)).isTrue
         Assertions.assertThat(member.verifyPassword("hello", passwordEncoder)).isFalse
     }
 
     @Test
     fun `changeNickName`() {
-        Assertions.assertThat(member.nickname).isEqualTo("bro")
+        Assertions.assertThat(member.nickname).isEqualTo("charlie")
 
-        member.changeNickName("batman")
+        member.changeNickName("charlie2")
 
-        Assertions.assertThat(member.nickname).isEqualTo("batman")
+        Assertions.assertThat(member.nickname).isEqualTo("charlie2")
     }
 
     @Test
     fun `changePassword`() {
-        member.changePassword("supersecret", passwordEncoder)
-        assertThat(member.verifyPassword("supersecret", passwordEncoder)).isTrue
+        member.changePassword("verysecret2", passwordEncoder)
+        assertThat(member.verifyPassword("verysecret2", passwordEncoder)).isTrue
     }
 
     @Test

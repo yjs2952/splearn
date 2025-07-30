@@ -2,6 +2,7 @@ package com.study.splearn.splearn.application.provided
 
 import com.study.splearn.splearn.domain.Member
 import com.study.splearn.splearn.domain.MemberRegisterRequest
+import jakarta.validation.Valid
 
 /**
  * 회원 등록과 관련된 기능을 제공한다
@@ -13,7 +14,7 @@ interface MemberRegister {
      * @param registerRequest 회원 등록 요청 정보
      * @return 등록된 회원 정보
      */
-    fun register(registerRequest: MemberRegisterRequest): Member
+    fun register(@Valid registerRequest: MemberRegisterRequest): Member
 
     /**
      * 회원 이메일 중복 여부를 확인한다

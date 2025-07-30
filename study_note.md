@@ -11,7 +11,6 @@
 ## 28강 회원 애플리케이션 서비스 테스트(2)
 
 ### 테스트 코드에서 의존성 주입하는 다양한 방법
-
 - @Autowired 사용
 - 생성자로 바로 주입
     1. @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL) 어노테이션 사용
@@ -19,3 +18,23 @@
         - 코틀린의 경우 primary constructor로 바로 받으면 됨
     2. spring.test.constructor.autowire.mode=all 설정
         - [junit-platform.properties](src/test/resources/junit-platform.properties)
+
+### 통합 테스트 시 주의할 점
+
+- 테스트 코드 간 영향을 주면 안된다
+    - 이전 테스트 코드에서 생성한 엔티티가 다음 테스트 결과에 영향을 주는 경우
+    - @Transactional 어노테이션을 사용하여 트랜잭션을 롤백 처리할 수 있음
+
+## 29강 표준 유효성 검사 도구를 이용한 요청 데이터 검증
+
+### 어떤 계층에서 검증을 해야하는가
+
+- 이전 계층에서 검증을 완료했다고 신뢰할 수 있는가
+- 애플리케이션 레이어가 중요한 방어막이 되어야 한다
+- JSR-303 유효성 검사 도구를 사용하여 요청 데이터 검증
+    - spring-boot-starter-validation 의존성 추가
+    - @Validated 를 사용하여 파라미터에 설정된 정보를 참고하여 유효성 검증을 먼저 수하는 코드를 자동 삽입
+        - 유효성 검증을 수행하려는 대상에 @Valid 어노테이션을 사용해야함
+        - 코틀린에서는 @field: 를 붙여야 validation 이 동작함
+            - 코틀린은 primary 생성자 필드에 어노테이션을 붙이면 기본적으로 생성자 파라미터에 어노테이션이 붙음
+            - spring-validation 은 생성자가 아닌 필드에 어노테이션을 붙여야 적용됨

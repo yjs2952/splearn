@@ -9,8 +9,12 @@ import com.study.splearn.splearn.domain.Member
 import com.study.splearn.splearn.domain.MemberRegisterRequest
 import com.study.splearn.splearn.domain.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.annotation.Validated
 
 @Service
+@Transactional
+@Validated
 class MemberService(
     private val memberRepository: MemberRepository,
     private val emailSender: EmailSender,

@@ -4,8 +4,8 @@ object MemberFixture {
 
     fun createMemberMemberRegisterRequest(email: String): MemberRegisterRequest = MemberRegisterRequest(
         email = email,
-        nickname = "bro",
-        password = "secret"
+        nickname = "charlie",
+        password = "verysecret"
     )
 
     fun createMemberMemberRegisterRequest(): MemberRegisterRequest = createMemberMemberRegisterRequest("bro@splearn.com")
