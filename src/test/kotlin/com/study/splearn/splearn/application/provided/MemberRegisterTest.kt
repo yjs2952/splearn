@@ -54,12 +54,12 @@ class MemberRegisterTest(
 
     @Test
     fun `member register request fail`() {
-        contraintViolationExceptionTest(MemberRegisterRequest("bro@splearn.app", "bro", "secret"))
-        contraintViolationExceptionTest(MemberRegisterRequest("bro@splearn.app", "bro--------------", "secret"))
-        contraintViolationExceptionTest(MemberRegisterRequest("brosplearn.app", "bro", "secret"))
+        checkValidation(MemberRegisterRequest("bro@splearn.app", "bro", "secret"))
+        checkValidation(MemberRegisterRequest("bro@splearn.app", "bro--------------", "secret"))
+        checkValidation(MemberRegisterRequest("brosplearn.app", "bro", "secret"))
     }
 
-    private fun contraintViolationExceptionTest(invalid: MemberRegisterRequest) {
+    private fun checkValidation(invalid: MemberRegisterRequest) {
         assertThrows<ConstraintViolationException> {
             memberRegister.register(invalid)
         }

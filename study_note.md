@@ -57,3 +57,20 @@
 
 - 도메인 모델의 핵심 로직은 도메인 모델에 정의하고 애플리케이션 서비스는 도메인 모델을 조합하는 역할로 한정한다
     - 도메인 모델의 핵심 로직을 어플리케이션 서비스에 노출시키는 것은 지양하자
+
+## 31강 코드 다듬기
+
+- @Fallback
+    - 다른 빈을 찾다가 이 타입의 빈이 없으면 이걸 사용해줘 라는 어노테이션
+- JUnit 에서는 JUnit 기능을 확장하는 extension 방식을 제공한다
+    - standard io extention
+        - 표준 입출력에 대한 테스트를 도와주는 확장 기능
+        - system.out.println() 메시지도 검증할 수 있다
+    - org.junit-pioneer:junit-pioneer:2.3.0 의존성 추가
+- Mockito 사용 시 주의할 점
+    - 이런 경고 문구가 생기면 mokito 에이전트를 명시적으로 등록해야 경고문구가 안 뜬다
+      현재는 mockito 가 스스로 에이전트를 등록해주고 있어 괜찮지만 다른 버전에서는 안될 수도 있다는 경고
+        - Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future
+          releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation:
+    - mockito 의 경우 클래스 파일 컴파일 된 것을 로딩하는 동안 바이트 코드를 실시간으 조작하여 필요한 기능을 삽입한다
+        - 다른 클래스가 로딩되는 동안 변환을 시켜 외부로 유출시키거나 외부에서 조작할 수도 있어 동적 에이전트 등록을 금지하도록 하고 있다
