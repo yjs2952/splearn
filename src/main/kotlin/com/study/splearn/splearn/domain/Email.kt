@@ -1,10 +1,12 @@
 package com.study.splearn.splearn.domain
 
+import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 import java.util.regex.Pattern
 
 @Embeddable
 data class Email(
+    @Column(length = 150, nullable = false, name = "email_address")
     val address: String,
 ) {
 
