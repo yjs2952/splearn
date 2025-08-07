@@ -27,7 +27,7 @@ class MemberFinderTest(
 
         val found = memberFinder.find(member.id!!)
 
-        Assertions.assertThat(member.id).isEqualTo(found?.id)
+        Assertions.assertThat(member.id).isEqualTo(found.id)
     }
 
     @Test

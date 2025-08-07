@@ -114,3 +114,10 @@
 ### 도메인 관심사가 아닌 JPA 어노테이션은 어떻게 제거하지?
 - xml 은 annotation 설정을 override 한다
 - JPA 어노테이션 설정을 xml 파일로 분리하여 관리
+
+## 34강 엔티티의 equals()와 hashCode() 구현
+
+### 공통 속성을 가진 abstract class 에 equals()와 hashCode()를 구현하는 방법
+
+- equals(), hashCode() 구현 시 하이버네이트 프록시도 고려하여 인스턴스 비교를 활 수 있도록 구현
+    - jpa buddy 플러그인 활용
