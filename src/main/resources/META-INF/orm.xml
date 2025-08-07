@@ -39,7 +39,7 @@
     <embeddable class="com.study.splearn.splearn.domain.Email">
         <attributes>
             <basic name="address">
-                <column name="email_address" nullable="false" length="100"/>
+                <column name="email_address" nullable="false" length="150"/>
             </basic>
         </attributes>
     </embeddable>

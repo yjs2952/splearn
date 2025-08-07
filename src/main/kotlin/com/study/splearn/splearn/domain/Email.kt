@@ -1,7 +1,9 @@
 package com.study.splearn.splearn.domain
 
+import jakarta.persistence.Embeddable
 import java.util.regex.Pattern
 
+@Embeddable
 data class Email(
     val address: String,
 ) {
