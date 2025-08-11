@@ -10,6 +10,7 @@ data class Member private constructor(
     val email: Email,
     var nickname: String,
     var passwordHash: String,
+    val detail: MemberDetail,
 ) : AbstractEntity() {
     var status: MemberStatus = MemberStatus.PENDING
 
