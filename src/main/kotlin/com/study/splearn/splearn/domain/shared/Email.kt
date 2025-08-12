@@ -1,4 +1,4 @@
-package com.study.splearn.splearn.domain
+package com.study.splearn.splearn.domain.shared
 
 import jakarta.persistence.Embeddable
 import java.util.regex.Pattern

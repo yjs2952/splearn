@@ -1,7 +1,9 @@
 package com.study.splearn.splearn.application.required
 
-import com.study.splearn.splearn.domain.Member
-import com.study.splearn.splearn.domain.MemberFixture
+import com.study.splearn.splearn.application.member.required.MemberRepository
+import com.study.splearn.splearn.domain.member.Member
+import com.study.splearn.splearn.domain.member.MemberFixture
+import com.study.splearn.splearn.domain.member.MemberStatus
 import jakarta.persistence.EntityManager
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -30,6 +32,11 @@ class MemberRepositoryTest {
 
         memberRepository.save(member)
         entityManager.flush()
+        entityManager.clear()
+
+        val found = memberRepository.findById(member.id!!)
+        Assertions.assertThat(found?.status).isEqualTo(MemberStatus.PENDING)
+        Assertions.assertThat(found?.detail?.registeredAt).isNotNull
 
         Assertions.assertThat(member.id).isNotNull()
     }

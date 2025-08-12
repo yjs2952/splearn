@@ -1,6 +1,6 @@
 package com.study.splearn.splearn.adapter.integration
 
-import com.study.splearn.splearn.domain.Email
+import com.study.splearn.splearn.domain.shared.Email
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junitpioneer.jupiter.StdIo

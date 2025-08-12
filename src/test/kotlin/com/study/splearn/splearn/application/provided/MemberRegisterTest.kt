@@ -1,10 +1,11 @@
 package com.study.splearn.splearn.application.provided
 
 import com.study.splearn.splearn.SplearnTestConfiguration
-import com.study.splearn.splearn.domain.DuplicateEmailException
-import com.study.splearn.splearn.domain.MemberFixture
-import com.study.splearn.splearn.domain.MemberRegisterRequest
-import com.study.splearn.splearn.domain.MemberStatus
+import com.study.splearn.splearn.application.member.provided.MemberRegister
+import com.study.splearn.splearn.domain.member.DuplicateEmailException
+import com.study.splearn.splearn.domain.member.MemberFixture
+import com.study.splearn.splearn.domain.member.MemberRegisterRequest
+import com.study.splearn.splearn.domain.member.MemberStatus
 import jakarta.persistence.EntityManager
 import jakarta.validation.ConstraintViolationException
 import org.assertj.core.api.Assertions

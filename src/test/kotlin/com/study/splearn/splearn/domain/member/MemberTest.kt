@@ -1,7 +1,5 @@
-package com.study.splearn.splearn.domain
+package com.study.splearn.splearn.domain.member
 
-import com.study.splearn.splearn.domain.MemberFixture.createMemberMemberRegisterRequest
-import com.study.splearn.splearn.domain.MemberFixture.createPasswordEncoder
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -15,9 +13,9 @@ class MemberTest {
 
     @BeforeEach
     fun setUp() {
-        passwordEncoder = createPasswordEncoder()
+        passwordEncoder = MemberFixture.createPasswordEncoder()
         member = Member.register(
-            registerRequest = createMemberMemberRegisterRequest(),
+            registerRequest = MemberFixture.createMemberMemberRegisterRequest(),
             passwordEncoder = passwordEncoder
         )
     }
@@ -27,14 +25,17 @@ class MemberTest {
         member
             .also {
                 assertThat(it.status).isEqualTo(MemberStatus.PENDING)
+                assertThat(it.detail.registeredAt).isNotNull
             }
     }
 
     @Test
-    fun `activate 메롱이다`() {
+    fun `activate`() {
+        assertThat(member.detail.activatedAt).isNull()
         member.activate()
 
         assertThat(member.status).isEqualTo(MemberStatus.ACTIVE)
+        assertThat(member.detail.activatedAt).isNotNull
     }
 
     @Test
@@ -53,6 +54,7 @@ class MemberTest {
         member.deactivate()
 
         assertThat(member.status).isEqualTo(MemberStatus.DEACTIVATED)
+        Assertions.assertThat(member.detail.deactivatedAt).isNotNull
     }
 
     @Test
@@ -107,9 +109,24 @@ class MemberTest {
     fun `invalidEmail`() {
         assertThrows<IllegalArgumentException> {
             Member.register(
-                registerRequest = createMemberMemberRegisterRequest("invalid-email"),
+                registerRequest = MemberFixture.createMemberMemberRegisterRequest("invalid-email"),
                 passwordEncoder = passwordEncoder
             )
         }
+    }
+
+    @Test
+    fun `updateInfo`() {
+        member.activate()
+        val updateRequest = MemberInfoUpdateRequest(
+            nickname = "Leo",
+            profileAddress = "bro100",
+            introduction = "자기소개"
+        )
+        member.updateInfo(updateRequest)
+
+        Assertions.assertThat(member.nickname).isEqualTo(updateRequest.nickname)
+        Assertions.assertThat(member.detail.profile.address).isEqualTo(updateRequest.profileAddress)
+        Assertions.assertThat(member.detail.introduction).isEqualTo(updateRequest.introduction)
     }
 }

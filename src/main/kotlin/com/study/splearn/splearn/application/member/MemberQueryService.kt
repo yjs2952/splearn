@@ -1,8 +1,8 @@
-package com.study.splearn.splearn.application
+package com.study.splearn.splearn.application.member
 
-import com.study.splearn.splearn.application.provided.MemberFinder
-import com.study.splearn.splearn.application.required.MemberRepository
-import com.study.splearn.splearn.domain.Member
+import com.study.splearn.splearn.application.member.provided.MemberFinder
+import com.study.splearn.splearn.application.member.required.MemberRepository
+import com.study.splearn.splearn.domain.member.Member
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.validation.annotation.Validated

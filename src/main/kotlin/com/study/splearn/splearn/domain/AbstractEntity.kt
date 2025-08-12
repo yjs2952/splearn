@@ -1,5 +1,6 @@
 package com.study.splearn.splearn.domain
 
+import com.study.splearn.splearn.domain.member.Member
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id

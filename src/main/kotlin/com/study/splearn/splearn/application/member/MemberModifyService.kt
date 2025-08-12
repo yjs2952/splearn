@@ -1,14 +1,14 @@
-package com.study.splearn.splearn.application
+package com.study.splearn.splearn.application.member
 
-import com.study.splearn.splearn.application.provided.MemberFinder
-import com.study.splearn.splearn.application.provided.MemberRegister
-import com.study.splearn.splearn.application.required.EmailSender
-import com.study.splearn.splearn.application.required.MemberRepository
-import com.study.splearn.splearn.domain.DuplicateEmailException
-import com.study.splearn.splearn.domain.Email
-import com.study.splearn.splearn.domain.Member
-import com.study.splearn.splearn.domain.MemberRegisterRequest
-import com.study.splearn.splearn.domain.PasswordEncoder
+import com.study.splearn.splearn.application.member.provided.MemberFinder
+import com.study.splearn.splearn.application.member.provided.MemberRegister
+import com.study.splearn.splearn.application.member.required.EmailSender
+import com.study.splearn.splearn.application.member.required.MemberRepository
+import com.study.splearn.splearn.domain.member.DuplicateEmailException
+import com.study.splearn.splearn.domain.member.Member
+import com.study.splearn.splearn.domain.member.MemberRegisterRequest
+import com.study.splearn.splearn.domain.member.PasswordEncoder
+import com.study.splearn.splearn.domain.shared.Email
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.validation.annotation.Validated

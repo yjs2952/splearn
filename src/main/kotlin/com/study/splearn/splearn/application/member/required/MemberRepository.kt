@@ -1,7 +1,7 @@
-package com.study.splearn.splearn.application.required
+package com.study.splearn.splearn.application.member.required
 
-import com.study.splearn.splearn.domain.Email
-import com.study.splearn.splearn.domain.Member
+import com.study.splearn.splearn.domain.member.Member
+import com.study.splearn.splearn.domain.shared.Email
 import org.springframework.data.repository.Repository
 
 /**
